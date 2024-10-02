@@ -3,7 +3,7 @@ services:
     image: postgres:latest
     container_name: postgres_fast_api
     environment:
-      POSTGRES_USER: amin
+      POSTGRES_USER: admin
       POSTGRES_PASSWORD: my_super_password
       POSTGRES_DB: fast_api
       PGin: /var/lib/postgresql/in/pgin
