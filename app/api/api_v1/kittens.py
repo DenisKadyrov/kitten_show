@@ -15,7 +15,7 @@ from app.core.schemes import (
 )
 from app.crud import kittens as kittens_crud
 
-router = APIRouter(tags=["Users"], prefix="/kittens")
+router = APIRouter(tags=["Kittens"], prefix="/kittens")
 
 
 @router.get("/", response_model=list[KittenRead])
