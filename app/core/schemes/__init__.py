@@ -1,1 +1,5 @@
-from .kitten import KittenBase, KittenRead, KittenCreate
+from .kitten import (
+    KittenCreate,
+    KittenRead,
+    KittenUpdate,
+)
