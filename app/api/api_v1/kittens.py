@@ -3,6 +3,7 @@ from typing import Annotated
 from fastapi import (
     APIRouter,
     Depends,
+    HTTPException
 )
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -23,8 +24,11 @@ async def get_kttens(
         AsyncSession,
         Depends(db_helper.session_getter),
     ],
-):
-    kittens = await kittens_crud.get_all_kittens(session=session)
+):  
+    try:
+        kittens = await kittens_crud.get_all_kittens(session=session)
+    except:
+        raise HTTPException(404, "Can't get kittens")
     return kittens
 
 
@@ -36,10 +40,13 @@ async def create_kitten(
     ],
     kitten_create: KittenCreate,
 ):
-    kitten = await kittens_crud.create_kitten(
-        session=session,
-        kitten_create=kitten_create,
-    )
+    try:
+        kitten = await kittens_crud.create_kitten(
+            session=session,
+            kitten_create=kitten_create,
+        )
+    except:
+        raise HTTPException(404, "Can't create kitten")
     return kitten
 
 @router.get("/{id}", response_model=KittenRead)
@@ -50,10 +57,13 @@ async def get_kitten(
     ],
     id: int,
 ):
-    kitten = await kittens_crud.get_kitten_by_id(
-        session=session,
-        id=id,
-    )
+    try:
+        kitten = await kittens_crud.get_kitten_by_id(
+            session=session,
+            id=id,
+        )
+    except:
+        raise HTTPException(404, "Can't get kitten")
     return kitten
 
 @router.get("/breeds/")
@@ -63,9 +73,12 @@ async def get_breeds(
         Depends(db_helper.session_getter)
     ],
 ) -> list:
-    breeds = await kittens_crud.get_breeds(
-        session=session,
-    )
+    try:
+        breeds = await kittens_crud.get_breeds(
+            session=session,
+        )
+    except:
+        raise HTTPException(404, "Can't get breeds")
     return list(set(breeds))
 
 @router.put("/{id}", response_model=KittenRead)
@@ -77,11 +90,14 @@ async def update_kitten(
     update_kitten: KittenUpdate,
     id: int
 ):
-    kitten = await kittens_crud.update_kitten_by_id(
-        session=session,
-        id=id,
-        new_data=update_kitten,
-    )
+    try:
+        kitten = await kittens_crud.update_kitten_by_id(
+            session=session,
+            id=id,
+            new_data=update_kitten,
+        )
+    except:
+        raise HTTPException(404, "Can't update kitten")
     return kitten
 
 @router.get("/breeds/{breed}", response_model=list[KittenRead])
@@ -92,10 +108,13 @@ async def get_kittens_by_breed(
     ],
     breed: str
 ):
-    kittens = await kittens_crud.get_kittens_by_breed(
-        session=session,
-        breed=breed,
-    )
+    try:
+        kittens = await kittens_crud.get_kittens_by_breed(
+            session=session,
+            breed=breed,
+        )
+    except:
+        raise HTTPException(404, "Can't get kitten by id")
     return kittens
 
 @router.delete("/{id}")
@@ -106,9 +125,12 @@ async def delete_kitten(
     ],
     id: int
 ) -> dict:
-    result = await kittens_crud.delete_kitten_by_id(
-        session=session,
-        id=id,
-    )
+    try:
+        result = await kittens_crud.delete_kitten_by_id(
+            session=session,
+            id=id,
+        )
+    except:
+        raise HTTPException(404, "Can't delete kitten")
     return result
 
