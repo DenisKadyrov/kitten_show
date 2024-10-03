@@ -7,3 +7,4 @@ asyncpg==0.29.0
 alembic==1.13.3
 fastapi-cli==0.0.5
 psycopg2==2.9.9
+pydantic-settings==2.5.2
