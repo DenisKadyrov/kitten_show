@@ -1,4 +1,5 @@
 # kitten_show
+CRUD for kitten show. DB - PostgreSQL, Alembic and SQLAlchemy
 ## For run:
 ```
 git clone https://github.com/DenisKadyrov/kitten_show.git
